@@ -48,5 +48,6 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(port, () => {
-  console.log(`delvegen dev server: http://localhost:${port}`);
+  const actual = server.address().port;
+  console.log(`delvegen dev server: http://localhost:${actual}`);
 });

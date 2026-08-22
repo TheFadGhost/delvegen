@@ -1,0 +1,11 @@
+import { chromium } from "playwright";
+console.log("launching...");
+const t0 = Date.now();
+const browser = await chromium.launch({ headless: true });
+console.log("launched in", Date.now() - t0, "ms");
+const page = await browser.newPage();
+await page.goto("about:blank");
+console.log("goto ok");
+await browser.close();
+console.log("done");
+process.exit(0);
