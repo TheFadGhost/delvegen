@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Delvegen — procedural dungeon generator</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="toolbar" role="toolbar" aria-label="Main controls">
+    <span class="brand">Delvegen</span>
+
+    <label class="field">
+      <span class="field-label">Algorithm</span>
+      <select id="algorithm-select" aria-label="Algorithm"></select>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Seed</span>
+      <span class="seed-group">
+        <input id="seed-input" type="text" spellcheck="false" aria-label="Seed" />
+        <button id="seed-copy" class="icon-btn" title="Copy seed" aria-label="Copy seed">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1" fill="none" stroke="currentColor"/><path d="M11 3H4a1 1 0 0 0-1 1v7" fill="none" stroke="currentColor"/></svg>
+        </button>
+        <button id="seed-dice" class="icon-btn" title="Random seed" aria-label="Random seed">
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="2.5" fill="none" stroke="currentColor"/><circle cx="5.6" cy="5.6" r="1.1" fill="currentColor"/><circle cx="10.4" cy="10.4" r="1.1" fill="currentColor"/><circle cx="10.4" cy="5.6" r="1.1" fill="currentColor"/><circle cx="5.6" cy="10.4" r="1.1" fill="currentColor"/></svg>
+        </button>
+      </span>
+    </label>
+
+    <label class="field">
+      <span class="field-label">Size</span>
+      <span class="size-group">
+        <input id="width-input" type="number" min="5" max="512" step="1" value="80" aria-label="Width in tiles" />
+        <span class="x">×</span>
+        <input id="height-input" type="number" min="5" max="512" step="1" value="50" aria-label="Height in tiles" />
+      </span>
+    </label>
+
+    <button id="generate-btn" class="primary">Generate</button>
+
+    <span class="spacer"></span>
+
+    <label class="field">
+      <span class="field-label">Theme</span>
+      <select id="theme-select" aria-label="Theme"></select>
+    </label>
+  </header>
+
+  <div class="frame">
+    <aside class="panel left" id="param-panel" aria-label="Parameters">
+      <h2 class="section-title">Generation</h2>
+      <div id="params-root" class="params"></div>
+    </aside>
+
+    <main class="stage" id="stage">
+      <canvas id="map-canvas" aria-label="Dungeon map"></canvas>
+      <div id="empty-state" class="overlay-state">
+        <div class="empty-grid" aria-hidden="true"></div>
+        <p class="empty-wordmark">Delvegen</p>
+        <p class="empty-hint">Choose an algorithm and press <kbd>Generate</kbd></p>
+        <p class="empty-kbd"><kbd>G</kbd> generate · drag pan · wheel zoom</p>
+      </div>
+      <div id="failure-state" class="overlay-state hidden" role="alert">
+        <p class="failure-title">Generation failed</p>
+        <p id="failure-message" class="failure-message"></p>
+      </div>
+      <div id="status-line" class="status-line" aria-live="polite"></div>
+    </main>
+
+    <aside class="panel right" aria-label="Metrics and legend">
+      <h2 class="section-title">Metrics</h2>
+      <table class="metrics" id="metrics-table">
+        <tbody></tbody>
+      </table>
+      <h2 class="section-title">Legend</h2>
+      <ul class="legend" id="legend-list"></ul>
+    </aside>
+  </div>
+
+  <script type="module" src="/dist/src/ui/main.js"></script>
+</body>
+</html>

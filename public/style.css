@@ -1,0 +1,246 @@
+/* Delvegen chrome. All colours come from theme tokens (see src/ui/themes.ts). */
+
+* { box-sizing: border-box; }
+
+:root {
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px;
+  --space-4: 16px; --space-5: 24px; --space-6: 32px;
+  --radius-control: 6px; --radius-panel: 10px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+button, input, select {
+  font: inherit;
+  color: inherit;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  padding: var(--space-1) var(--space-2);
+}
+
+button { cursor: pointer; }
+button:hover { background: var(--panel); }
+input:hover, select:hover { border-color: var(--ink-muted); }
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 0 4px;
+  background: var(--panel);
+}
+
+/* ---------------- toolbar ---------------- */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  height: 48px;
+  padding: 0 var(--space-4);
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.brand {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  margin-right: var(--space-2);
+}
+
+.field { display: flex; align-items: center; gap: var(--space-2); }
+.field-label { color: var(--ink-muted); font-size: 11px; }
+
+.seed-group, .size-group { display: inline-flex; align-items: center; gap: var(--space-1); }
+.seed-group input { width: 140px; font-family: var(--font-mono); }
+.size-group input { width: 64px; }
+.x { color: var(--ink-muted); }
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  padding: 0;
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+  font-weight: 600;
+  padding: var(--space-1) var(--space-4);
+}
+.primary:hover { filter: brightness(1.08); background: var(--accent); }
+
+.spacer { flex: 1; }
+
+/* ---------------- frame layout ---------------- */
+
+.frame {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.panel {
+  width: 280px;
+  overflow-y: auto;
+  padding: var(--space-4);
+  background: var(--panel);
+  flex-shrink: 0;
+}
+.panel.left { border-right: 1px solid var(--border); }
+.panel.right { width: 264px; border-left: 1px solid var(--border); }
+
+.section-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 var(--space-3);
+}
+.section-title + .section-title, * + .section-title { margin-top: var(--space-5); }
+
+/* ---------------- parameter controls ---------------- */
+
+.param { margin-bottom: var(--space-3); }
+.param-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--space-1);
+}
+.param-name { font-size: 13px; }
+.param-value {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+}
+.param-range {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+.param input[type="range"] { width: 100%; padding: 0; accent-color: var(--accent); }
+.param input[type="number"] { width: 72px; font-family: var(--font-mono); }
+.param-desc {
+  font-size: 11px;
+  color: var(--ink-muted);
+  margin-top: 2px;
+}
+.param-check { display: flex; align-items: center; gap: var(--space-2); }
+.param-check input { accent-color: var(--accent); }
+
+/* ---------------- stage ---------------- */
+
+.stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+#map-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+#map-canvas.dragging { cursor: grabbing; }
+
+.overlay-state {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  text-align: center;
+  pointer-events: none;
+}
+.hidden { display: none !important; }
+
+.empty-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.25;
+}
+.empty-wordmark { font-size: 22px; font-weight: 650; }
+.empty-hint, .empty-kbd { color: var(--ink-muted); }
+
+.failure-title { font-size: 15px; font-weight: 600; color: var(--danger); }
+.failure-message {
+  max-width: 480px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-panel);
+  background: var(--panel);
+}
+
+.status-line {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-muted);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  padding: 2px var(--space-2);
+  pointer-events: none;
+}
+.status-line:empty { display: none; }
+
+/* ---------------- metrics & legend ---------------- */
+
+.metrics {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.metrics td { padding: 3px 0; vertical-align: top; }
+.metrics td.k { color: var(--ink-muted); padding-right: var(--space-2); }
+.metrics td.v {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+  min-width: 9ch; /* fixed value column: digits changing never shifts layout */
+}
+
+.legend { list-style: none; margin: 0; padding: 0; }
+.legend li { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1); }
+.legend canvas { border: 1px solid var(--border); image-rendering: pixelated; }
