@@ -1,0 +1,36 @@
+{
+  "name": "delvegen",
+  "version": "0.1.0",
+  "description": "Procedural dungeon generator with five algorithms, seeded determinism, step-through visualization, metrics, and a headless library API.",
+  "type": "module",
+  "license": "MIT",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
+  "bin": {
+    "delvegen": "./dist/src/cli/main.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/",
+    "dev": "node scripts/serve.mjs",
+    "golden:update": "npm run build && node dist/tests/update-golden.js"
+  },
+  "keywords": [
+    "procedural-generation",
+    "dungeon-generator",
+    "roguelike",
+    "game-development",
+    "bsp",
+    "cellular-automata"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.6.0"
+  }
+}
