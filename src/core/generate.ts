@@ -76,7 +76,24 @@ export function generateDungeon(options: GenerateOptions): GeneratedDungeon {
     try {
       const data = def.generate(ctx);
       applyPostPasses(data, String(options.seed), postConfigs, recorder);
-      verifyFullyConnected(data.grid);
+
+      // Connectivity guarantee: verification is non-negotiable. If the user's
+      // pass configuration left unreachable regions behind, run the built-in
+      // repair as a deterministic last-resort before giving up on this attempt.
+      try {
+        verifyFullyConnected(data.grid);
+      } catch {
+        const repair = getPostPass("repair");
+        repair.apply(
+          data,
+          makePostContext({
+            rng: createRng(String(options.seed), "post-repair-auto"),
+            params: {},
+            recorder,
+          }),
+        );
+        verifyFullyConnected(data.grid);
+      }
 
       const pair = farthestPair(data.grid);
       if (!pair) throw new GenerationError("dungeon contains no walkable tiles");

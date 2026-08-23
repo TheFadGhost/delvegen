@@ -19,5 +19,7 @@ export * from "./core/post-registry.js";
 export * from "./core/generate.js";
 
 export { registerBuiltinAlgorithms } from "./algorithms/index.js";
+export { registerPostPasses } from "./post/index.js";
+export { bootstrapDelvegen } from "./bootstrap.js";
 export { computeMetrics, type DungeonMetrics } from "./analysis/metrics.js";
 export { labelRegions, type RegionLabeling } from "./analysis/regions.js";
