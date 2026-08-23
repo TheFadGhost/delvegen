@@ -41,3 +41,26 @@ export function buildRenderModel(
     overlays,
   };
 }
+
+/**
+ * Painter-ready model for a single recorded generation frame. Analysis
+ * overlays (entrance/exit markers, dead-end marks, region hatching) are
+ * null during step-through — they only exist for the finished map.
+ */
+export function buildFrameModel(
+  frameTiles: Uint8Array,
+  width: number,
+  height: number,
+  overlays: OverlayFlags,
+): RenderModel {
+  return {
+    width,
+    height,
+    tiles: frameTiles,
+    entrance: null,
+    exit: null,
+    deadEnds: null,
+    regionLabels: null,
+    overlays,
+  };
+}
