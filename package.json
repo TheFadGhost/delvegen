@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "npm run build && node --test dist/tests/",
+    "cli": "node dist/src/cli/main.js",
+    "test": "npm run build && node --test \"dist/tests/*.test.js\"",
     "dev": "node scripts/serve.mjs",
     "golden:update": "npm run build && node dist/tests/update-golden.js"
   },

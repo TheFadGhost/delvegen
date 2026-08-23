@@ -77,10 +77,13 @@ class Xoshiro implements Rng {
   ) {
     const base = `${seedString}|${salt}`;
     const sm = fnv1a32(base) | 1;
+    // Chain splitmix32 through its own output: calling it four times with the
+    // same word yields four IDENTICAL state words, and a uniform xoshiro128**
+    // state makes the first two outputs provably equal.
     this.s0 = splitmix32(sm);
-    this.s1 = splitmix32(sm);
-    this.s2 = splitmix32(sm);
-    this.s3 = splitmix32(sm);
+    this.s1 = splitmix32(this.s0);
+    this.s2 = splitmix32(this.s1);
+    this.s3 = splitmix32(this.s2);
     // All-zero state is invalid for xoshiro128**; nudge deterministically.
     if ((this.s0 | this.s1 | this.s2 | this.s3) === 0) {
       this.s0 = this.s1 = this.s2 = this.s3 = 0x9e3779b9;
