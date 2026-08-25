@@ -1,5 +1,12 @@
 # Delvegen
 
+> **built with ox alpha**
+>
+> most of this was written in august 2026 during the free preview window of
+> [ox alpha](https://openrouter.ai/stealth/ox-alpha), an anonymous stealth model
+> that turned up on openrouter for about a week. i set the direction and reviewed
+> what came back. the tests are real and they pass — clone it and run them.
+
 A procedural dungeon generator that shows its work: five genuinely different generation
 algorithms, seeded determinism you can verify, frame-by-frame step-through visualization,
 and metrics for comparing what each technique actually produces. Built for game developers
